@@ -7,7 +7,6 @@ class HomeController extends Controller
     public function __construct()
     {
         parent::__construct('home');
-        $this->view->setVar('search', '');
     }
 
     /**
@@ -16,7 +15,6 @@ class HomeController extends Controller
      */
     public function indexAction()
     {
-        $this->view->setVar('search', '');
         if (!empty($this->request->query->search)) {
             $this->view->setVar('search', $this->request->query->search);
             $this->view->setTemplate('search');

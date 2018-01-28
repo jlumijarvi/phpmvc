@@ -1,3 +1,4 @@
+<?php $vm = isset($vm) ? $vm : new stdClass(); ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -68,13 +69,15 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
-<?php foreach ($scripts as $script): ?>
-    <script src="<?= $script->src ?>"
-        <?php if ($script->integrity): ?> integrity="<?= $script->integrity ?>" <?php endif; ?>
-        <?php if ($script->crossorigin): ?> crossorigin="<?= $script->crossorigin ?>"<?php endif; ?>
-    >
-    </script>
-<?php endforeach; ?>
+<?php if (isset($scripts)): ?>
+    <?php foreach ($scripts as $script): ?>
+        <script src="<?= $script->src ?>"
+            <?php if ($script->integrity): ?> integrity="<?= $script->integrity ?>" <?php endif; ?>
+            <?php if ($script->crossorigin): ?> crossorigin="<?= $script->crossorigin ?>"<?php endif; ?>
+        >
+        </script>
+    <?php endforeach; ?>
+<?php endif; ?>
 
 <?= isset($inlineScripts) ? $inlineScripts : '' ?>
 

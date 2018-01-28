@@ -34,3 +34,12 @@ function safe($text)
     }
     return $text;
 }
+
+function tidyHtml($html)
+{
+    $options = ['indent' => true, 'wrap' => 1000, 'new-blocklevel-tags' => 'main,nav'];
+    $tidy = new \tidy();
+    $tidy->parseString($html, $options);
+    $tidy->cleanRepair();
+    return "$tidy";
+}

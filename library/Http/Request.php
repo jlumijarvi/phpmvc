@@ -11,15 +11,15 @@ class Request
     public $post;
     public $query;
 
-    public function __construct($serverVariables, $post)
+    public function __construct($serverVars, $postData)
     {
-        $this->uri = $_SERVER['REQUEST_URI'];
-        $this->method = $_SERVER['REQUEST_METHOD'];
-        $this->isHttps = $_SERVER['HTTPS'] === 'on';
-        $this->host = $_SERVER['HTTP_HOST'];
-        $this->post = (object)$post;
+        $this->uri = $serverVars['REQUEST_URI'];
+        $this->method = $serverVars['REQUEST_METHOD'];
+        $this->isHttps = $serverVars['HTTPS'] === 'on';
+        $this->host = $serverVars['HTTP_HOST'];
+        $this->post = (object)$postData;
         $query = [];
-        $queryParts = explode('&', $_SERVER['QUERY_STRING']);
+        $queryParts = explode('&', $serverVars['QUERY_STRING']);
         foreach ($queryParts as $queryPart) {
             $nameValue = explode('=', $queryPart);
             if (!isset($nameValue[1])) {
