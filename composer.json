@@ -1,12 +1,10 @@
 {
-  "require": {
-    "mustache/mustache": "^2.12"
-  },
   "autoload": {
     "psr-4": {
       "": "library/",
       "Models\\": "models/",
-      "Controllers\\": "controllers/"
+      "Controllers\\": "controllers/",
+      "Views\\": "views/"
     }
   }
 }

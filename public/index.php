@@ -10,5 +10,9 @@ define('BASE_PATH', realpath(__DIR__ . DIRECTORY_SEPARATOR . '..'));
 require BASE_PATH . '/vendor/autoload.php';
 require BASE_PATH . '/library/utils.php';
 
-$router = Router::instance();
-echo $router->handle();
+$config = require BASE_PATH . '/config/config.php';
+$routes = require BASE_PATH . '/config/routes.php';
+
+$app = App::instance();
+$app->setup($config, $routes);
+$app->run();

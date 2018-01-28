@@ -7,30 +7,51 @@ class HomeController extends Controller
     public function __construct()
     {
         parent::__construct('home');
+        $this->view->setVar('search', '');
     }
 
+    /**
+     * @return string
+     * @throws \Throwable
+     */
     public function indexAction()
     {
-        if ($this->request->method === 'POST') {
-            $this->view->setVar('search', $this->request->post->search);
+        $this->view->setVar('search', '');
+        if (!empty($this->request->query->search)) {
+            $this->view->setVar('search', $this->request->query->search);
             $this->view->setTemplate('search');
-            return $this->view->render();
-        } else {
-            $this->view->setVar('title', 'Home');
-            return $this->view->render();
         }
-    }
-
-    public function aboutAction()
-    {
-        $this->view->setVar('title', 'About');
-        $this->view->setTemplate('about');
+        $this->view->setVar('title', 'Home');
         return $this->view->render();
     }
 
-    public function notFoundAction()
+    /**
+     * @return string
+     * @throws \Throwable
+     */
+    public function authorizedAction()
     {
-        $this->view->setTemplate('notFound');
+        return $this->redirect('/signin');
+    }
+
+    /**
+     * @return string
+     * @throws \Throwable
+     */
+    public function aboutAction()
+    {
+        $this->view->setVar('title', 'About');
+        return $this->view->render();
+    }
+
+    /**
+     * @return string
+     * @throws \Throwable
+     */
+    public function signinAction()
+    {
+        $this->view->setLayout(null);
+        $this->view->setVar('title', 'Sign-in');
         return $this->view->render();
     }
 
