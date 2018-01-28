@@ -24,7 +24,7 @@ class Route
     {
         /** @var Controller $ctrl */
         $ctrl = new $this->controller();
-        return $ctrl->executeAction($this->action, $params);
+        return $ctrl->executeAction($this->action, ...$params);
     }
 
     /**

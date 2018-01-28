@@ -27,11 +27,11 @@ class Controller
      * @param mixed $action
      * @return string
      */
-    public function executeAction($action, $params)
+    public function executeAction($action, ...$params)
     {
         $this->view->setTemplate($action);
         $this->action = $action;
         $actionMethod = "{$this->action}Action";
-        return $this->$actionMethod($params);
+        return $this->$actionMethod(...$params);
     }
 }

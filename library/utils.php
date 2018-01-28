@@ -21,8 +21,16 @@ function dd()
     $args = count($args) === 1 ? $args[0] : $args;
     echo '<pre>';
     if ($args) {
-        echo json_encode($args, JSON_PRETTY_PRINT);
+        echo print_r($args, true);
     }
     echo '</pre>';
     die();
+}
+
+function safe($text)
+{
+    if (is_string($text)) {
+        return htmlentities(strip_tags($text));
+    }
+    return $text;
 }

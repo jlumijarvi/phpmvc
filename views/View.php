@@ -8,15 +8,13 @@ class View
     private $layout;
     private $template;
     private $vm;
+    private $scripts = [];
     private $tidy = true;
 
-    public function __construct($path = null)
+    public function __construct($path = '')
     {
         $this->vm = new ViewModel();
         $this->layout = 'default';
-        $this->setVar('title', '');
-        $this->setVar('search', '');
-        $this->setVar('dropdownItems', []);
         $this->basePath = BASE_PATH . '/templates' . ($path ? "/$path" : '');
     }
 
@@ -29,14 +27,20 @@ class View
         try {
             ob_start();
             $vm = clone $this->vm;
-            $vars = ['vm' => $vm];
+            $vars = [
+                'vm' => $vm,
+                'scripts' => $this->scripts
+            ];
             extract($vars);
             $path = "{$this->basePath}/{$this->template}.phtml";
             include $path;
             $tpl = ob_get_clean();
             if ($this->layout) {
-                $vars = ['vm' => $vm];
-                $vars['vm']->main = $tpl;
+                $vm->main = $tpl;
+                $vars = [
+                    'vm' => $vm,
+                    'scripts' => $this->scripts
+                ];
                 ob_start();
                 extract($vars);
                 $path = BASE_PATH . "/templates/{$this->layout}.phtml";
@@ -60,6 +64,7 @@ class View
     public function setVar($name, $data)
     {
         $this->vm->$name = $data;
+        return $this;
     }
 
     /**
@@ -92,5 +97,14 @@ class View
     public function setTemplate($template)
     {
         $this->template = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $template));
+    }
+
+    /**
+     * @param Script $script
+     */
+    public function addScript($script)
+    {
+        $this->scripts = $this->scripts ?: [];
+        $this->scripts[] = $script;
     }
 }

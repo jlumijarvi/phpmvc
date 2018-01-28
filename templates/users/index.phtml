@@ -1,0 +1,30 @@
+<div class="row pt-5">
+    <div class="col-xs-12">
+        <h1 class="pt-5">
+            Users page
+        </h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <form action="/users" method="post">
+            <?php foreach ($vm->users as $user): ?>
+                <p>
+                    <label for="name"><?= safe($user->id) ?>: <?= safe($user->name) ?></label>
+                    <input type="hidden" value="<?= safe($user->id) ?>" name="id">
+                    <input type="text" class="form-control" value="<?= safe($user->name) ?>" id="name" name="name">
+                </p>
+            <?php endforeach; ?>
+            <input type="submit" class="form-control btn btn-primary" value="Submit">
+        </form>
+    </div>
+</div>
+
+<?php
+$inlineScripts = <<<SCRIPTS
+
+<script>
+</script>
+
+SCRIPTS;
+?>

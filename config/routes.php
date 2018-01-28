@@ -1,6 +1,7 @@
 <?php
 
 return [
+    // Home
     [
         'pattern' => '',
         'controller' => \Controllers\HomeController::class
@@ -19,5 +20,16 @@ return [
         'pattern' => 'signin',
         'controller' => \Controllers\HomeController::class,
         'action' => 'signin'
+    ],
+
+    // Users
+    [
+        'pattern' => 'users',
+        'controller' => \Controllers\UsersController::class
+    ],
+    [
+        'pattern' => 'users\/([A-z0-9]+)',
+        'controller' => \Controllers\UsersController::class,
+        'action' => 'show'
     ],
 ];
