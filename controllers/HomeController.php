@@ -55,6 +55,6 @@ class HomeController extends Controller
 
     protected function redirect($location)
     {
-        header('Location: ' . $location);
+        header("Location: $location");
     }
 }

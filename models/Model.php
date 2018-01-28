@@ -12,7 +12,10 @@ abstract class Model
     {
     }
 
-    static function createConnection()
+    /**
+     * @return \PDO
+     */
+    public static function createConnection()
     {
         $config = \App::instance()->getConfig('db');
         $host = $config['host'];
@@ -59,21 +62,17 @@ abstract class Model
         $id = $vars['id'];
         unset($vars['id']);
 
-        foreach (array_keys($vars) as $i => $value) {
-            if (!in_array($value, static::$fields)) {
-                unset($vars[$value]);
-            }
-        }
-        if (empty($vars)) {
-            return false;
-        }
-
         $fields = [];
         $values = [];
 
-        foreach ($vars as $key => $value) {
-            $fields[] = "`$key` = ?";
-            $values[] = $value;
+        foreach ($vars as $field => $value) {
+            if (in_array($field, static::$fields)) {
+                $fields[] = "`$field` = ?";
+                $values[] = $value;
+            }
+        }
+        if (empty($fields)) {
+            return false;
         }
 
         $sql = "UPDATE `$t` SET " . implode(',', $fields) . " WHERE id = ?;";
@@ -101,7 +100,9 @@ abstract class Model
             $user = new $cls;
 
             foreach ($row as $field => $value) {
-                $user->$field = $value;
+                if (in_array($field, static::$fields)) {
+                    $user->$field = $value;
+                }
             }
 
             $ret[] = $user;
@@ -125,7 +126,9 @@ abstract class Model
             $user = new $cls;
 
             foreach ($row as $field => $value) {
-                $user->$field = $value;
+                if (in_array($field, static::$fields)) {
+                    $user->$field = $value;
+                }
             }
 
             $ret[] = $user;
