@@ -6,6 +6,8 @@ abstract class Model
 {
     protected static $table;
 
+    protected static $fields = [];
+
     public function __construct()
     {
     }
@@ -56,6 +58,15 @@ abstract class Model
         $vars = get_object_vars($this);
         $id = $vars['id'];
         unset($vars['id']);
+
+        foreach (array_keys($vars) as $i => $value) {
+            if (!in_array($value, static::$fields)) {
+                unset($vars[$value]);
+            }
+        }
+        if (empty($vars)) {
+            return false;
+        }
 
         $fields = [];
         $values = [];

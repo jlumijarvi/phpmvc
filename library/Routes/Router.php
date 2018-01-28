@@ -55,7 +55,7 @@ class Router
      * @return string
      * @throws \Throwable
      */
-    public function handle($requestUri)
+    public function route($requestUri)
     {
         $parts = explode('/', explode('?', $requestUri)[0]);
         array_shift($parts);

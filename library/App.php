@@ -35,7 +35,7 @@ class App
     public function run()
     {
         try {
-            echo $this->router->handle($_SERVER['REQUEST_URI']);
+            echo $this->router->route($_SERVER['REQUEST_URI']);
         } catch (\Throwable $e) {
             dd($e);
         }
