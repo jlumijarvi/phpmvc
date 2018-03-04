@@ -26,20 +26,3 @@ function dd()
     echo '</pre>';
     die();
 }
-
-function safe($text)
-{
-    if (is_string($text)) {
-        return htmlentities(strip_tags($text));
-    }
-    return $text;
-}
-
-function tidyHtml($html)
-{
-    $options = ['indent' => true, 'wrap' => 1000, 'new-blocklevel-tags' => 'main,nav'];
-    $tidy = new \tidy();
-    $tidy->parseString($html, $options);
-    $tidy->cleanRepair();
-    return "$tidy";
-}

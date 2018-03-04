@@ -26,11 +26,14 @@
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+            <li class="nav-item <?php if ($vm->getRoute()->getName() === 'home') { ?> active<?php } ?>">
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item<?php if ($vm->getRoute()->getName() === 'about') { ?> active<?php } ?>">
                 <a class="nav-link" href="/about">About</a>
+            </li>
+            <li class="nav-item <?php if ($vm->getRoute()->getName() === 'users') { ?> active<?php } ?>">
+                <a class="nav-link" href="/users">Users</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link disabled" href="#">Disabled</a>
@@ -49,14 +52,16 @@
         </ul>
         <form class="form-inline my-2 my-lg-0" method="get" action="/">
             <input class="form-control mr-sm-2" id="search" name="search" type="text" placeholder="Search"
-                   aria-label="Search" value="<?= safe($vm->search) ?>" autofocus>
+                   aria-label="Search" value="<?= $vm->search ?>" autofocus>
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
 </nav>
 
 <main role="main" class="container">
-    <?= $vm->main ?>
+<div>
+</div>
+    <?= $vm->raw('main') ?>
 </main>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"

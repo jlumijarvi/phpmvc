@@ -10,9 +10,9 @@
         <form action="/users" method="post">
             <?php foreach ($vm->users as $user): ?>
                 <p>
-                    <label for="name"><?= safe($user->id) ?>: <?= safe($user->name) ?></label>
-                    <input type="hidden" value="<?= safe($user->id) ?>" name="id">
-                    <input type="text" class="form-control" value="<?= safe($user->name) ?>" id="name" name="name">
+                    <label for="name"><?= $user->id ?>: <?= $user->name ?></label>
+                    <input type="hidden" value="<?= $user->id ?>" name="id">
+                    <input type="text" class="form-control" value="<?= $user->name ?>" id="name" name="name">
                 </p>
             <?php endforeach; ?>
             <input type="submit" class="form-control btn btn-primary" value="Submit">

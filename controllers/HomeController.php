@@ -52,9 +52,4 @@ class HomeController extends Controller
         $this->view->setVar('title', 'Sign-in');
         return $this->view->render();
     }
-
-    protected function redirect($location)
-    {
-        header("Location: $location");
-    }
 }

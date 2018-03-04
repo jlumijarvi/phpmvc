@@ -12,12 +12,15 @@ class Route
     private $controller;
     /** @var string */
     private $action;
+    /** @var string */
+    private $name;
 
-    public function __construct($pattern, $controller, $action = 'index')
+    public function __construct($pattern, $controller, $action = 'index', $name = null)
     {
         $this->pattern = $pattern;
         $this->controller = $controller;
         $this->action = $action ? $action : 'index';
+        $this->name = $name;
     }
 
     public function dispatch(...$params)
@@ -49,5 +52,15 @@ class Route
     public function getAction()
     {
         return $this->action;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 }

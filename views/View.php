@@ -47,7 +47,7 @@ class View
                 include $path;
                 $tpl = ob_get_clean();
                 if ($this->tidy) {
-                    $tpl = tidyHtml($tpl);
+                    $tpl = $this->tidyHtml($tpl);
                 }
             }
             return $tpl;
@@ -101,5 +101,14 @@ class View
     public function addScript($script)
     {
         $this->scripts[] = $script;
+    }
+
+    private function tidyHtml($html)
+    {
+        $options = ['indent' => true, 'wrap' => 1000, 'new-blocklevel-tags' => 'main,nav'];
+        $tidy = new \tidy();
+        $tidy->parseString($html, $options);
+        $tidy->cleanRepair();
+        return "$tidy";
     }
 }

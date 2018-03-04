@@ -11,6 +11,9 @@ class Request
     public $post;
     public $query;
 
+    /**
+     * 
+     */
     public function __construct($serverVars, $postData)
     {
         $this->uri = $serverVars['REQUEST_URI'];

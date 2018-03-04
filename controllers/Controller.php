@@ -34,4 +34,9 @@ class Controller
         $actionMethod = "{$this->action}Action";
         return $this->$actionMethod(...$params);
     }
+
+    protected function redirect($location)
+    {
+        header("Location: $location");
+    }
 }

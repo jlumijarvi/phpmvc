@@ -2,6 +2,7 @@
 
 class App
 {
+    /** @var App */
     private static $instance;
 
     /** @var array */
@@ -19,10 +20,10 @@ class App
      */
     public static function instance()
     {
-        if (!App::$instance) {
-            App::$instance = new App();
+        if (!static::$instance) {
+            static::$instance = new App();
         }
-        return App::$instance;
+        return static::$instance;
     }
 
     public function setup($config = [], $routes = [])
@@ -54,5 +55,10 @@ class App
     {
         $this->config[$key] = $value;
         return $this;
+    }
+
+    public function getCurrentRoute()
+    {
+        return $this->router->getCurrent();
     }
 }

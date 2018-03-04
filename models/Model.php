@@ -54,6 +54,11 @@ abstract class Model
         }
     }
 
+    public function save()
+    {
+        
+    }
+
     public function update()
     {
         $t = static::$table;

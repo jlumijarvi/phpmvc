@@ -10,6 +10,9 @@ class Router
     /** @var Route[] */
     private $routes = [];
 
+    /** @var Route */
+    private $current;
+
     private function __construct()
     {
     }
@@ -19,10 +22,10 @@ class Router
      */
     public static function instance()
     {
-        if (!Router::$instance) {
-            Router::$instance = new Router();
+        if (!static::$instance) {
+            static::$instance = new Router();
         }
-        return Router::$instance;
+        return static::$instance;
     }
 
     /**
@@ -35,7 +38,8 @@ class Router
                 new Route(
                     $r['pattern'],
                     $r['controller'],
-                    isset($r['action']) ? $r['action'] : null
+                    isset($r['action']) ? $r['action'] : null,
+                    isset($r['name']) ? $r['name'] : null
                 )
             );
         }
@@ -61,7 +65,7 @@ class Router
         array_shift($parts);
         $url = implode('/', $parts);
 
-        $foundRoute = null;
+        $this->current = null;
         $params = [];
         /** @var Route $route */
         foreach ($this->routes as $route) {
@@ -72,16 +76,22 @@ class Router
                 foreach ($matches as $match) {
                     $params[] = $match;
                 }
-                $foundRoute = $route;
+                $this->current = $route;
                 break;
             }
         }
-        if ($foundRoute) {
-            return $foundRoute->dispatch(...$params);
+        if ($this->current) {
+            return $this->current->dispatch(...$params);
         } else {
+            $this->current = new Route(null, null, null);
             $view = new \Views\View();
             $view->setTemplate('notFound');
             return $view->render();
         }
+    }
+
+    public function getCurrent()
+    {
+        return $this->current;
     }
 }
